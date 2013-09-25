@@ -1,6 +1,6 @@
 function BadgeTextAnimator ( options ) {
-	if ( options === undefined ) {
-		return null;
+	if ( options == null ) {
+		throw new Error( 'You must pass options to the BadgeTextAnimator' );
 	}
 
 	this.options = {
