@@ -1,3 +1,14 @@
+/**
+ * @class
+ * @constructor
+ * A Chrome badge (extension button) text animator class.
+ * 
+ * @param {Object} options Configuration options. Available 
+ *  options are: text (the text to display), interval (default: 
+ *  500, how fast to animate), repeat (default: true, should the 
+ *  text start animating from the beginning when animation 
+ *  finishes), size (default: 6, the size of the badge text).
+ */
 function BadgeTextAnimator ( options ) {
 	if ( options == null ) {
 		throw new Error( 'You must pass options to the BadgeTextAnimator' );
@@ -14,6 +25,9 @@ function BadgeTextAnimator ( options ) {
 	this._currentIndex = 0;
 }
 
+/**
+ * Start the animation of the badge text.
+ */
 BadgeTextAnimator.prototype.animate = function () {
 	var spaces = Array ( '', ' ', '  ', '   ', '    ', '     ', '      ' );
 	chrome.browserAction.setBadgeText( { text: spaces[this._options.size] } );
@@ -28,6 +42,9 @@ BadgeTextAnimator.prototype.animate = function () {
 	);
 };
 
+/**
+ * Stops the animation.
+ */
 BadgeTextAnimator.prototype.stop = function () {
 	clearInterval( this._intervalId );
 	this._intervalId = null;
@@ -35,6 +52,7 @@ BadgeTextAnimator.prototype.stop = function () {
 	chrome.browserAction.setBadgeText( { text: '' } );
 };
 
+/** @private */
 BadgeTextAnimator.prototype._doAnimate = function () {
 	var startAt = this._currentIndex,
 		cutAt = this._options.size,
