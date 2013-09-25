@@ -1,0 +1,29 @@
+{
+  "name": "chrome-badge-animator",
+  "version": "1.0.0",
+  "description": "A Chrome badge text animator.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janhancic/chrome-badge-animator.git"
+  },
+  "keywords": [
+    "chrome",
+    "badge",
+    "animator",
+    "animate",
+    "text"
+  ],
+  "author": {
+    "name": "Jan Hancic",
+    "email": "jan.hancic@gmail.com",
+    "url": "http://hancic.info"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janhancic/chrome-badge-animator/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
