@@ -14,7 +14,28 @@ function BadgeTextAnimator ( options ) {
 	this._currentIndex = 0;
 }
 
-BadgeTextAnimator.prototype.doAnimate = function () {
+BadgeTextAnimator.prototype.animate = function () {
+	var spaces = Array ( '', ' ', '  ', '   ', '    ', '     ', '      ' );
+	chrome.browserAction.setBadgeText( { text: spaces[this._options.size] } );
+
+	this._doAnimate();
+
+	this._intervalId = setInterval(
+		function () {
+			this._doAnimate();
+		}.bind( this ),
+		this._options.interval
+	);
+};
+
+BadgeTextAnimator.prototype.stop = function () {
+	clearInterval( this._intervalId );
+	this._intervalId = null;
+
+	chrome.browserAction.setBadgeText( { text: '' } );
+};
+
+BadgeTextAnimator.prototype._doAnimate = function () {
 	var startAt = this._currentIndex,
 		cutAt = this._options.size,
 		addBefore = false,
@@ -49,25 +70,4 @@ BadgeTextAnimator.prototype.doAnimate = function () {
 			this.stop ();
 		}
 	}
-};
-
-BadgeTextAnimator.prototype.animate = function () {
-	var spaces = Array ( '', ' ', '  ', '   ', '    ', '     ', '      ' );
-	chrome.browserAction.setBadgeText( { text: spaces[this._options.size] } );
-
-	this.doAnimate();
-
-	this._intervalId = setInterval(
-		function () {
-			this.doAnimate();
-		}.bind( this ),
-		this._options.interval
-	);
-};
-
-BadgeTextAnimator.prototype.stop = function () {
-	clearInterval( this._intervalId );
-	this._intervalId = null;
-
-	chrome.browserAction.setBadgeText( { text: '' } );
 };
