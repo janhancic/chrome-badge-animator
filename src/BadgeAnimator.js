@@ -3,31 +3,33 @@ function BadgeTextAnimator ( options ) {
 		throw new Error( 'You must pass options to the BadgeTextAnimator' );
 	}
 
-	this.options = {
+	this._options = {
 		text: options.text,
-		interval: ( options.interval === undefined ? 500 : options.interval ),
-		repeat: ( options.repeat === undefined ? true : options.repeat ),
-		size: ( options.size !== undefined && options.size > 0 && options.size <= 6 ? options.size : 6 )
+		interval: ( options.interval == null ? 500 : options.interval ),
+		repeat: ( options.repeat == null ? true : options.repeat ),
+		size: ( options.size != null && options.size > 0 && options.size <= 6 ? options.size : 6 )
 	};
 
-	this.intervalId = null;
-	this.index = 0;
+	this._intervalId = null;
+	this._currentIndex = 0;
 }
 
 BadgeTextAnimator.prototype.doAnimate = function () {
-	var startAt = this.index;
-	var cutAt = this.options.size;
-	var addBefore = false;
-	if ( this.index < this.options.size ) {
-		cutAt = this.index + 1;
+	var startAt = this._currentIndex,
+		cutAt = this._options.size,
+		addBefore = false,
+		chunk, difference;
+
+	if ( this._currentIndex < this._options.size ) {
+		cutAt = this._currentIndex + 1;
 		addBefore = true;
 		startAt = 0;
 	}
 
-	var chunk = this.options.text.substr ( startAt, cutAt );
+	chunk = this._options.text.substr( startAt, cutAt );
 
-	if ( chunk.length < this.options.size ) {
-		var difference = this.options.size - chunk.length;
+	if ( chunk.length < this._options.size ) {
+		difference = this._options.size - chunk.length;
 		for ( var i = 0; i <= difference; i++ ) {
 			if ( addBefore === true ) {
 				chunk = ' ' + chunk;
@@ -37,12 +39,12 @@ BadgeTextAnimator.prototype.doAnimate = function () {
 		}
 	}
 
-	chrome.browserAction.setBadgeText ( { text: chunk } );
+	chrome.browserAction.setBadgeText( { text: chunk } );
 
-	this.index = this.index + 1;
-	if ( this.index === this.options.text.length ) {
-		if ( this.options.repeat === true ) {
-			this.index = 0;
+	this._currentIndex = this._currentIndex + 1;
+	if ( this._currentIndex === this._options.text.length ) {
+		if ( this._options.repeat === true ) {
+			this._currentIndex = 0;
 		} else {
 			this.stop ();
 		}
@@ -51,21 +53,21 @@ BadgeTextAnimator.prototype.doAnimate = function () {
 
 BadgeTextAnimator.prototype.animate = function () {
 	var spaces = Array ( '', ' ', '  ', '   ', '    ', '     ', '      ' );
-	chrome.browserAction.setBadgeText ( { text: spaces[this.options.size] } );
+	chrome.browserAction.setBadgeText( { text: spaces[this._options.size] } );
 
-	this.doAnimate ();
-	this.intervalId = setInterval ( (function ( self ) {
-			return function () {
-				self.doAnimate();
-			};
-		} ) ( this ),
-		this.options.interval
+	this.doAnimate();
+
+	this._intervalId = setInterval(
+		function () {
+			this.doAnimate();
+		}.bind( this ),
+		this._options.interval
 	);
 };
 
 BadgeTextAnimator.prototype.stop = function () {
-	clearInterval ( this.intervalId );
-	this.intervalId = null;
+	clearInterval( this._intervalId );
+	this._intervalId = null;
 
-	chrome.browserAction.setBadgeText ( { text: '' } );
+	chrome.browserAction.setBadgeText( { text: '' } );
 };
