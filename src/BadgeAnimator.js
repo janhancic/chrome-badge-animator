@@ -29,8 +29,8 @@ function BadgeTextAnimator ( options ) {
  * Start the animation of the badge text.
  */
 BadgeTextAnimator.prototype.animate = function () {
-	var spaces = Array ( '', ' ', '  ', '   ', '    ', '     ', '      ' );
-	chrome.browserAction.setBadgeText( { text: spaces[this._options.size] } );
+	var spaces = [ '', ' ', '  ', '   ', '    ', '     ', '      ' ];
+	this._setBadgeText( spaces[this._options.size] );
 
 	this._doAnimate();
 
@@ -49,7 +49,7 @@ BadgeTextAnimator.prototype.stop = function () {
 	clearInterval( this._intervalId );
 	this._intervalId = null;
 
-	chrome.browserAction.setBadgeText( { text: '' } );
+	this._setBadgeText( '' );
 };
 
 /** @private */
@@ -78,14 +78,19 @@ BadgeTextAnimator.prototype._doAnimate = function () {
 		}
 	}
 
-	chrome.browserAction.setBadgeText( { text: chunk } );
+	this._setBadgeText( chunk );
 
 	this._currentIndex = this._currentIndex + 1;
 	if ( this._currentIndex === this._options.text.length ) {
 		if ( this._options.repeat === true ) {
 			this._currentIndex = 0;
 		} else {
-			this.stop ();
+			this.stop();
 		}
 	}
+};
+
+/** @private */
+BadgeTextAnimator.prototype._setBadgeText = function ( text ) {
+	chrome.browserAction.setBadgeText( { text: text } );
 };
