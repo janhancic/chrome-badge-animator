@@ -1,0 +1,1 @@
+This sample extension is based on the code from https://github.com/tutsplus/developing-google-chrome-extensions
