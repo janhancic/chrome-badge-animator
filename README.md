@@ -7,3 +7,6 @@ It is used to animate the text of a, what Chrome calls, badge.
 
 ## How to use it?
 Include (in the manifest file or inline) the "badgeanimator.js" file in your extension. See "example.js" for how to actually use the class.
+
+## License
+Licensed under MIT. See [LICENSE.md](https://github.com/janhancic/chrome-badge-animator/blob/master/LICENSE.md) file for details.
