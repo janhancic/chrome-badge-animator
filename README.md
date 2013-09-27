@@ -8,7 +8,7 @@ This class will animate the text of your extension's badge. Think LED displays o
 
 This is how it will actually look in Chrome:
 
-![Chrome Badge Animator](http://hancic.info/wp-content/uploads/2009/12/animator.png "Chrome Badge Animator")
+![Chrome Badge Animator](https://raw.github.com/janhancic/chrome-badge-animator/master/misc/badge_animation.gif "Chrome Badge Animator")
 
 ## How to use it?
 You can look at the example extension in `sampleext`. You have to include the `src/BadgeAnimator.js` file in your extension (either in the manifest file or directly in the code somewhere). Once you've done that you can use it like this:
