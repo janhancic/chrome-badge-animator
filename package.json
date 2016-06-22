@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A Chrome badge text animator.",
   "scripts": {
-    "start": "babel ./src/ -d build/ -w"
+    "start": "babel ./src/ -d sampleext/ -w",
+    "prebuild": "npm run clean",
+    "build": "babel ./src/ -d build/",
+    "clean": "rm -rf build"
   },
   "repository": {
     "type": "git",
