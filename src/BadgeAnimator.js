@@ -92,5 +92,5 @@ BadgeTextAnimator.prototype._doAnimate = function () {
 
 /** @private */
 BadgeTextAnimator.prototype._setBadgeText = function ( text ) {
-	chrome.browserAction.setBadgeText( { text: text } );
+	browser.browserAction.setBadgeText( { text: text } );
 };
